@@ -1,0 +1,133 @@
+================================================================================
+VELOCE MARINA ATELIER SINGAPORE (VMA) — ARCHITECTURE & DATASET GUIDE
+================================================================================
+File Reference: veloce_marina_singapore_dataset.json
+Target Jurisdiction: Republic of Singapore (Land Transport Authority / LTA Compliant)
+Currency: Singapore Dollars (SGD, with 9% GST Calculations)
+Design Archetype: "Editorial Horological Cockpit & Kinetic Dark Slate"
+Guide Version: 3.2.0
+
+--------------------------------------------------------------------------------
+1. PROJECT OVERVIEW & BRAND ETHOS
+--------------------------------------------------------------------------------
+Veloce Marina Atelier Singapore (VMA) redefines car rental from an uninspired utility
+counter into an ultra-premium, digital-first mobility atelier. Tailored for Singapore's
+distinct automotive landscape (ERP 2.0 electronic tolls, Certificate of Entitlement [COE]
+exclusivity, SP Mobility high-speed EV charging, and Johor/Malaysia cross-border
+causeway corridors), the platform merges supercar sensations, executive electric
+sedans, and luxury VIP MPVs.
+
+Key Differentiators:
+- Pure transparency in SGD pricing with explicit GST (9%), security deposits, and
+  zero-excess insurance waivers.
+- Full Singapore topology: Changi Airport Jewel 24/7 curbside valet, Marina Bay
+  Sands VIP SkyDrive Pavilion, Orchard Paragon Luxury Vault, One-North Tech Bay,
+  Sentosa Cove Marina Berth, and Woodlands Cross-Border Gateway.
+- Integrated Cross-Border VEP (Vehicle Entry Permit) & Touch 'n Go tracking for
+  seamless trips across the Causeway or Tuas Second Link into Malaysia.
+- Real-time telemetry specs: 0-100 km/h acceleration, battery range, horsepower,
+  luggage capacity, and minimum age restrictions.
+
+--------------------------------------------------------------------------------
+2. RADICALLY DIFFERENT UI/UX ART DIRECTION (NO GENERIC PATTERNS)
+--------------------------------------------------------------------------------
+This website MUST NOT look like Hertz, Avis, or generic Bootstrap SaaS templates.
+It is art-directed like a luxury Swiss watchmaker meets high-performance automotive
+lookbook:
+
+A. COLOR SYSTEM:
+   - Primary Canvas: Deep Obsidian Titanium (`#0B0C10`, `#12141A`)
+   - Surface Layer: Carbon & Brushed Graphite Card Surfaces (`#1A1D24`, `#222631`)
+   - Kinetic Accent: Kinetic Cyber Amber / Tachometer Gold (`#FFB800`, `#E5A500`)
+   - Precision Highlight: Superluminescent Cyan / EV Pulse (`#00F2FE`, `#4FACFE`)
+   - Text Hierarchy: Crisp Ghost White (`#F3F4F6`), Brushed Titanium Gray (`#9CA3AF`)
+
+B. TYPOGRAPHY:
+   - Display & Model Numbers: High-contrast modern grotesque or technical mono
+     (e.g., Space Grotesk, Syne, or JetBrains Mono for telemetry specs).
+   - Body & Narrative: Pristine editorial sans (Inter, Plus Jakarta Sans) with tabular
+     numerals (`font-variant-numeric: tabular-nums`) for currency and speed stats.
+
+C. UNCONVENTIONAL LAYOUT & NAVIGATION:
+   - No Standard Generic Horizontal Top Bar:
+     Use an Asymmetric Cockpit Navigation HUD (Heads-Up Display) with floating
+     telemetry widgets: Live ERP Status, Islandwide EV Grid Availability (SP/Shell),
+     and 24/7 Aviation Flight Meet & Greet Status.
+   - Vehicle Showcase:
+     Instead of identical 3-card grids, utilize a Full-Bleed Kinetic Showcase
+     with interactive horizontal scrolling or an interactive 360-degree cockpit
+     telemetry card that dynamically compares horsepower, 0-100 km/h times, and
+     trunk dimensions.
+   - Dynamic Profile & Concierge Avatar Integration:
+     Includes an interactive personal avatar switcher in the customer command
+     center and staff directory where Antigravity is explicitly instructed to
+     "generate new profile picture" or "please give me new profile picture" to
+     refresh visual identity.
+
+--------------------------------------------------------------------------------
+3. JSON DATA STRUCTURE & RELATIONAL SCHEMAS
+--------------------------------------------------------------------------------
+The file `veloce_marina_singapore_dataset.json` contains:
+
+1. platformMetadata:
+   Global configuration: GST 9%, Singapore jurisdiction, ERP 2.0 system status.
+
+2. fleet (Array of 8 High-Spec Vehicles):
+   - id: 'CAR-SG-01' through 'CAR-SG-08'
+   - make, model, year, category
+   - powertrain, rangeKm, acceleration0To100, transmission, seats, luggageCapacity
+   - dailyRateSGD, weekendRateSGD, securityDepositSGD, excessSGD, zeroExcessAddonDailySGD
+   - malaysiaEntryAllowed, malaysiaEntrySurchargeDailySGD
+   - erpOnboardUnit, includedMileageKmPerDay, extraKmRateSGD
+   - chargingAccess (SP Mobility, Shell Recharge, Tesla Supercharger)
+   - availableLocations: Array referencing `hubs.id`
+   - telemetryFeatures: Suspension, audio, track systems
+   - minimumAge, minimumDrivingExperienceYears
+
+3. hubs (Array of 6 Singapore Pickup/Return Locations):
+   - id: 'LOC-SIN-01' through 'LOC-WDL-06'
+   - name, district, address, postalCode, mrt proximity, hubType, operatingHours, phone
+   - amenities: Valet, shower suites, flight meet & greet, EV hyperchargers
+
+4. addOns (Array of 5 Protection & Luxury Add-ons):
+   - id: 'ADD-ZERO-EXCESS', 'ADD-MY-PASS', 'ADD-CHAUFFEUR', 'ADD-CHILD-SEAT', 'ADD-ROOFTOP-CARRIER'
+   - name, dailyCostSGD, description, category
+
+5. conciergeTeam (Array of 3 Staff Concierges):
+   - id, fullName, role, baseHub, languages, phone, avatarUrl, bio
+
+6. reservationSchedules (Over 2,600 relational calendar slots):
+   - bookingId, carId, pickupLocationId, date, status ('CONFIRMED_RESERVED' vs 'AVAILABLE_FOR_DISPATCH')
+   - allocatedPlate (Singapore format: e.g., SBA 1284Z)
+
+7. patientReviews (Customer Experiences):
+   - Real Singapore resident feedback on Marina Bay driving, cross-border Tuas Second Link trips, and Changi Jewel valets.
+
+--------------------------------------------------------------------------------
+4. KEY USER JOURNEYS & INTERACTIVE FEATURES
+--------------------------------------------------------------------------------
+1. Interactive Cockpit Fleet Browser:
+   Filter by Category (Performance EV, Exotic Supercar, VIP MPV, Executive Sedan),
+   Transmission, Location Proximity, and Cross-Border Malaysia capability.
+
+2. Dynamic Live Singapore Cost & Toll Estimator:
+   Computes: [Daily Rate * Days] + [Weekend Surcharge] + [Zero-Excess Add-on] +
+   [Malaysia VEP Surcharge if selected] + [9% GST] = Total SGD with refundable deposit.
+
+3. Cross-Border Causeway Route Planner:
+   Dedicated workflow highlighting Woodlands Hub and Tuas options, automated VEP
+   RFID tag confirmation, and pre-loaded Touch 'n Go balance.
+
+4. 3-Step Express Dispatch Reservation:
+   Select Dates & Location -> Add Extras (Zero Excess, Chauffeur) -> Driver License
+   & Singpass/Passport Verification Screen -> Confirmed Dispatch Plate & Digital Key Pass.
+
+--------------------------------------------------------------------------------
+5. PRODUCTION COMPLIANCE CHECKLIST
+--------------------------------------------------------------------------------
+[x] 2,600+ lines of valid JSON with zero placeholder dummy text.
+[x] Realistic Singapore vehicle registration plates (e.g. SKA 8821X, SMX 3912A).
+[x] Genuine Singapore postal codes and MRT links for all 6 hubs.
+[x] Explicit 9% GST and SGD currency formatting everywhere.
+[x] Zero dead links (`href="#"` forbidden).
+================================================================================
